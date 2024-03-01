@@ -32,18 +32,27 @@
 
 const fs = require("fs");
 
-fs.readFile('a.txt', 'utf-8', (err, data) => {
-    if (err) {
-        console.error("Error reading file:", err);
-    } else {
-        console.log(data);
-    }
-});
+// fs.readFile('a.txt', 'utf-8', (err, data) => {
+//     if (err) {
+//         console.error("Error reading file:", err);
+//     } else {
+//         console.log(data);
+//     }
+// });
 
-let a = 0;
-for(let i = 0;i<10000000000;i++){
-    a+=i;
-}
+// let a = 0;
+// for(let i = 0;i<10000000000;i++){
+//     a+=i;
+// }
+
+fs.writeFile('a.txt',"omkar is my name",(err)=>{
+    if(err){
+        console.log(`There was error in the system ${err}`)
+
+    }else{
+        console.log("the data was successfully written to the file")
+    }
+})
 
 
 
