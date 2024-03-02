@@ -45,5 +45,59 @@
   const app = express();
   
   app.use(bodyParser.json());
+
+  let todos = []
+
+  app.get('/todos',(req,res)=>{
+    res.status(200).json(todos)
+  })
+  
+  app.post('/todos',(req,res)=>{
+    const todo = {
+      id: Math.floor(Math.random()*10000),
+      title:req.body.title,
+      description:req.body.description
+    }
+    todos.push(todo);
+    res.status(201).json(todo);
+  })
+
+  app.get('/todos/:id',(req,res)=>{
+    const id = req.params.id;
+    for(let i = 0;i<todos.length;i++){
+      if(todos[i].id == id){
+        res.json(todos[i])
+      }
+    }  
+    res.status(404).send();     
+  })
+
+  app.put('/todos/:id',(req,res)=>{
+    const id = req.params.id;
+    for(let i = 0;i<todos.length;i++){
+      if(todos[i].id == id){
+        todos[i].title = req.body.title
+        todos[i].description = req.body.description
+        res.json(todos[i])
+      }
+    }  
+    res.status(404).send();
+  })
+
+  app.delete('/todos/:id',(req,res)=>{
+    const id = req.params.id;
+    for(let i = 0;i<todos.length;i++){
+      if(todos[i].id == id){
+        todos.slice(i,1);
+        res.status(200).send();
+      }
+    }  
+    res.status(404).send();
+    
+  })
+
+  app.listen(3000,()=>{
+    console.log("the server is running at port 3000")
+  })
   
   module.exports = app;
