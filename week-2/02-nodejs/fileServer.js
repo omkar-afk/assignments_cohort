@@ -17,5 +17,34 @@ const fs = require('fs');
 const path = require('path');
 const app = express();
 
+app.get('/files',(req,res)=>{
+  fs.readdir('./files',(err,files)=>{
+    if(err){
+      console.log(err);
+      res.status(500).send("Dir cannot be read.")
+    }
+    res.status(200).json(files);
+  })
+})
+
+app.get('/files/:filename',(req,res)=>{
+  const filename = req.params.filename
+  fs.readFile(`./files/${filename}`,'utf-8',(err,data)=>{
+    if(err){
+      console.log(err)
+      res.status(500).send("cannot read contents of the file.")
+    }
+    res.status(201).json(data)
+  })
+})
+
+app.all('*',(req,res)=>{
+  res.status(404).json("error has occurred.")
+})
+
+app.listen(3000,()=>{
+  console.log("The server is listening at port 3000")
+})
+
 
 module.exports = app;
